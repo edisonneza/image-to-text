@@ -3,5 +3,8 @@
     "hello_welcome": "Welcome to Image to Text app",
     "select_input_type": "Select input type",
     "upload_file": "Upload file",
-    "insert_url": "Insert URL"
+    "insert_url": "Insert URL",
+    "copy": "Copy",
+    "text_copied": "Text has been copied",
+    "error_occurred": "An error occurred"
   }

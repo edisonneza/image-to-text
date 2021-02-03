@@ -3,8 +3,13 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import { useTranslation } from "react-i18next";
 import Tesseract from "tesseract.js";
 
-import Grid from "@material-ui/core/Grid";
+import { Grid, Button } from "@material-ui/core";
 import { LinearProgressWithLabel } from '../linearProgress';
+import { Divider, LinearProgress } from "@material-ui/core";
+import FileCopyIcon from '@material-ui/icons/FileCopy';
+import { copyToClipboard } from '../../utils/functions';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '../alertComponent';
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -24,35 +29,108 @@ export default function TesseractComponent(props: ITesseractProps) {
     const { t } = useTranslation();
     const classes = useStyles();
 
-    const [textFromImage, setTextFromImage] = React.useState<String>(`Mild Splendour of the various-vested Night!
-    Mother of wildly-working visions! haill
-    I watch thy gliding, while with watery light
-    Thy weak eye glimmers through a fleecy veil;
-    And when thou lovest thy pale orb to shroud
-    Behind the gather’d blackness lost on high;
-    And when thou dartest from the wind-rent cloud
-    Thy placid lightning o’er the awaken’d sky.`);
-    const [progress, setProgress] = React.useState<number>(0);
+    const [textFromImage, setTextFromImage] = React.useState<string>("");
+    const [progress, setProgress] = React.useState<number>(-1);
+    const [textCopied, setTextCopied] = React.useState<boolean>(false);
+    const [isError, setIsError] = React.useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = React.useState<string>("");
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
 
     useEffect(() => {
         if (imageSource) {
-            // Tesseract.recognize(
-            //     'https://tesseract.projectnaptha.com/img/eng_bw.png',
-            //     'eng',
-            //     { logger: m => console.log('logger: ', m) }
-            //   ).then(({ data: { text } }) => {
-            //     console.log('text: ', text);
-            //     setTextFromImage(text);
-            //   });
-        }
-    }, []);
+            setProgress(0);
+            setTextFromImage("");
+            setIsLoading(true);
 
-    if(!imageSource)
+            Tesseract.recognize(
+                imageSource,
+                'eng',
+                {
+                    logger: m => {
+                        console.log('logger: ', m);
+                        if (m.status === "recognizing text") {
+                            setProgress(m.progress * 100);
+                        }
+                    }
+                }
+            ).then(({ data: { text } }) => {
+                console.log('text: ', text);
+                setTextFromImage(text);
+            }).catch(error => {
+                console.log('error', error);
+                setErrorMessage(error.toString());
+                setIsError(true);
+                setIsLoading(false);
+
+                // setTimeout(() => setErrorMessage(""), 3000);
+            })
+        }
+    }, [imageSource]);
+
+    const copyText = () => {
+        copyToClipboard(textFromImage);
+        setTextCopied(true);
+
+        setTimeout(() => setTextCopied(false), 1500);
+    }
+
+    if (!imageSource)
         return (<p className={classes.textContainer}>Please select an image...</p>);
 
     return (
         <Grid container className={classes.textContainer}>
-            {textFromImage}
+            <Grid item style={{ width: '100%' }}>
+                {(isLoading && progress !== 100) && (
+                    <>
+                        {progress > 0 ? <LinearProgressWithLabel value={progress} /> : <LinearProgress />}
+                        <Divider style={{ margin: '12px 0' }} />
+                    </>
+                )}
+
+                {textFromImage &&
+                    (
+                        <>
+                            {textFromImage}
+                            < Divider style={{ margin: '12px 0' }} />
+                            <Grid container justify="flex-end">
+                                <Button
+                                    variant="contained"
+                                    color="default"
+                                    startIcon={<FileCopyIcon />}
+                                    size="small"
+                                    onClick={copyText}
+                                >
+                                    {t('copy')}
+                                </Button>
+                            </Grid>
+                        </>
+                    )}
+
+                {(!isLoading && errorMessage) && <p style={{textAlign: 'center', color: 'tomato'}}>{t('error_occurred')}</p>}
+
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                    open={textCopied}
+                    message={t('text_copied')}
+                />
+
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                    open={isError}
+                    message={t('text_copied')}
+                >
+                    <Alert onClose={() => setIsError(false)} severity="error">
+                        {errorMessage}
+                    </Alert>
+                </Snackbar>
+            </Grid>
         </Grid>
     );
 };

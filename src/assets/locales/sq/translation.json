@@ -3,5 +3,8 @@
     "hello_welcome": "Miresevini ne Image to Text app",
     "select_input_type": "Zgjidhni menyren e ngarkimit te imazhit",
     "upload_file": "Ngarko skedarin",
-    "insert_url": "Vendosni URL"
+    "insert_url": "Vendosni URL",
+    "copy": "Kopjo tekstin",
+    "text_copied": "Teksti eshte kopjuar",
+    "error_occurred": "Ka ndodhur nje gabim"
   }

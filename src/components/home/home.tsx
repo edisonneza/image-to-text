@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import Grid from "@material-ui/core/Grid";
 import { Button, Paper, TextField } from "@material-ui/core";
 import TesseractComponent from './tesseractComponent';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -55,7 +56,10 @@ export default function HomeComponent() {
 
                 <Grid container justify="center">
                     {inputType == 'file' ? <Grid item lg={12}>
-                        <Button variant="contained" component="label">
+                        <Button
+                            variant="contained"
+                            component="label"
+                            startIcon={<CloudUploadIcon />}>
                             {t('upload_file')}
                             <input type="file" hidden />
                         </Button>
