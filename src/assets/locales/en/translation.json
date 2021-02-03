@@ -6,5 +6,6 @@
     "insert_url": "Insert URL",
     "copy": "Copy",
     "text_copied": "Text has been copied",
-    "error_occurred": "An error occurred"
+    "error_occurred": "An error occurred",
+    "image_alt": "Image failed to load"
   }

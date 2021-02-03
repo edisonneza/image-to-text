@@ -34,9 +34,7 @@ export default function HomeComponent() {
     const classes = useStyles();
 
     const [inputType, setInputType] = React.useState<String>("url");
-    const [textFromImage, setTextFromImage] = React.useState<String>("");
     const [imageSource, setImageSource] = React.useState<string>("https://tesseract.projectnaptha.com/img/eng_bw.png");
-
 
     return (
         <Grid container>
@@ -55,7 +53,7 @@ export default function HomeComponent() {
                 </FormControl>
 
                 <Grid container justify="center">
-                    {inputType == 'file' ? <Grid item lg={12}>
+                    {inputType === 'file' ? <Grid item lg={12}>
                         <Button
                             variant="contained"
                             component="label"
@@ -79,7 +77,7 @@ export default function HomeComponent() {
 
             <Grid item xs={12} lg={6}>
                 <Paper className={classes.paper}>
-                    <img src={imageSource} className={classes.img} />
+                    <img src={imageSource} className={classes.img} alt={t('image_alt')} />
                 </Paper>
             </Grid>
 

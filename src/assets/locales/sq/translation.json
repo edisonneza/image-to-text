@@ -6,5 +6,6 @@
     "insert_url": "Vendosni URL",
     "copy": "Kopjo tekstin",
     "text_copied": "Teksti eshte kopjuar",
-    "error_occurred": "Ka ndodhur nje gabim"
+    "error_occurred": "Ka ndodhur nje gabim",
+    "image_alt": "Imazhi nuk u ngarkua"
   }
