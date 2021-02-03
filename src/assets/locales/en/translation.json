@@ -1,6 +1,7 @@
 {
     "select_language": "Select Language",
-    "hello_welcome_to_react": "Hello, Welcome to React",
-    "this_is_an_example": "This is an example",
-    "please_enter_name": "Please enter your name"
+    "hello_welcome": "Welcome to Image to Text app",
+    "select_input_type": "Select input type",
+    "upload_file": "Upload file",
+    "insert_url": "Insert URL"
   }

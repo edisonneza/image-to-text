@@ -1,6 +1,7 @@
 {
     "select_language": "Zgjidhni gjuhen",
-    "hello_welcome_to_react": "Pershendetje, miresevini ne React",
-    "this_is_an_example": "Ky eshte nje shembull",
-    "please_enter_name": "Ju lutem vendosni emrin tuaj"
+    "hello_welcome": "Miresevini ne Image to Text app",
+    "select_input_type": "Zgjidhni menyren e ngarkimit te imazhit",
+    "upload_file": "Ngarko skedarin",
+    "insert_url": "Vendosni URL"
   }
