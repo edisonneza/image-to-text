@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 
 import Grid from "@material-ui/core/Grid";
 import { Button, Paper, TextField } from "@material-ui/core";
+import TesseractComponent from './tesseractComponent';
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -21,6 +22,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     img: {
         maxWidth: '100%'
+    },
+    paper: {
+        margin: 10
     }
 }));
 
@@ -30,18 +34,20 @@ export default function HomeComponent() {
 
     const [inputType, setInputType] = React.useState<String>("url");
     const [textFromImage, setTextFromImage] = React.useState<String>("");
+    const [imageSource, setImageSource] = React.useState<string>("https://tesseract.projectnaptha.com/img/eng_bw.png");
+
 
     return (
-        <Grid container spacing={2}>
+        <Grid container>
             <Grid container direction="row" justify="center" className={classes.radio}>
                 {/* <p style={{ textAlign: 'center' }}>{t("hello_welcome")}</p> */}
                 <FormControl component="fieldset">
                     <FormLabel component="legend">{t('select_input_type')}</FormLabel>
                     <RadioGroup row aria-label="position" name="position" defaultValue="top">
-                        <Grid item lg={6}>
+                        <Grid item xs={6} sm={6} lg={6}>
                             <FormControlLabel value="url" control={<Radio color="primary" />} label="URL" onClick={() => setInputType('url')} />
                         </Grid>
-                        <Grid item lg={6}>
+                        <Grid item xs={6} sm={6} lg={6}>
                             <FormControlLabel value="file" control={<Radio color="primary" />} label="File" onClick={() => setInputType('file')} />
                         </Grid>
                     </RadioGroup>
@@ -55,11 +61,12 @@ export default function HomeComponent() {
                         </Button>
                     </Grid> :
 
-                        <Grid item lg={6}>
+                        <Grid item xs={12} sm={12} lg={6}>
                             <TextField
                                 label={t('insert_url')}
                                 fullWidth
-
+                                value={imageSource}
+                                onChange={(e) => setImageSource(e.target.value)}
                             />
                         </Grid>
                     }
@@ -67,16 +74,14 @@ export default function HomeComponent() {
             </Grid>
 
             <Grid item xs={12} lg={6}>
-                <Paper>
-                    <img src="https://tesseract.projectnaptha.com/img/eng_bw.png" className={classes.img} />
+                <Paper className={classes.paper}>
+                    <img src={imageSource} className={classes.img} />
                 </Paper>
             </Grid>
 
             <Grid item xs={12} lg={6}>
-                <Paper>
-                    <div>
-                        {textFromImage}
-                    </div>
+                <Paper className={classes.paper}>
+                    <TesseractComponent imageSource={imageSource} />
                 </Paper>
             </Grid>
 
