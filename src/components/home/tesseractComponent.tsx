@@ -89,9 +89,12 @@ export default function TesseractComponent(props: ITesseractProps) {
                     await worker.terminate();
                 } catch (error) {
                     console.log('error', error);
-                    setErrorMessage(error.toString());
+                    // setErrorMessage(error.toString());
+                    setErrorMessage(t('error_cors_or_other'));
                     setIsError(true);
                     setIsLoading(false);
+
+                    setTimeout(() => setIsError(false), 3000);
                 }
             })();
         }

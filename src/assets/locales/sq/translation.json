@@ -1,16 +1,17 @@
 {
-  "app_title": "Konvertues Imazh ne Tekst | © Edison Neza",
-  "select_language": "Zgjidhni gjuhen",
-  "hello_welcome": "Miresevini ne Image to Text app",
-  "select_input_type": "Zgjidhni menyren e ngarkimit te imazhit",
+  "app_title": "Konvertues Imazh në Tekst | © Edison Neza",
+  "select_language": "Zgjidhni gjuhën",
+  "hello_welcome": "Miresevini në Image to Text app",
+  "select_input_type": "Zgjidhni menyrën e ngarkimit të imazhit",
   "upload_file": "Ngarko skedarin",
   "insert_url": "Vendosni URL",
   "copy": "Kopjo tekstin",
-  "text_copied": "Teksti eshte kopjuar",
-  "error_occurred": "Ka ndodhur nje gabim",
+  "text_copied": "Teksti është kopjuar",
+  "error_occurred": "Ka ndodhur një gabim",
   "image_alt": "Imazhi nuk u ngarkua",
   "file_not_image": "Skedari që po zgjidhni nuk është një imazh :(",
-  "please_select_image": "Ju lutem zgjidhni nje imazh...",
+  "please_select_image": "Ju lutem zgjidhni një imazh...",
   "incorrect_url": "URL jo korrekte",
-  "image_panel": "Paneli i imazhit"
+  "image_panel": "Paneli i imazhit",
+  "error_cors_or_other": "Aksesimi për të marrë imazhin është bllokuar nga politika CORS; ose arsye tjetër. Provo me një imazh tjetër :)"
 }

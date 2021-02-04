@@ -12,5 +12,6 @@
   "file_not_image": "The file you are selecting is not an image :(",
   "please_select_image": "Please select an image...",
   "incorrect_url": "Incorrect URL",
-  "image_panel": "Image panel"
+  "image_panel": "Image panel",
+  "error_cors_or_other": "Access to fetch the image has been blocked by CORS policy; or other reason. Try with another image :)"
 }
