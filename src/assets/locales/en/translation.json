@@ -8,5 +8,9 @@
   "copy": "Copy",
   "text_copied": "Text has been copied",
   "error_occurred": "An error occurred",
-  "image_alt": "Image failed to load"
+  "image_alt": "Image failed to load",
+  "file_not_image": "The file you are selecting is not an image :(",
+  "please_select_image": "Please select an image...",
+  "incorrect_url": "Incorrect URL",
+  "image_panel": "Image panel"
 }

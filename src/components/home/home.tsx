@@ -8,10 +8,12 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import { useTranslation } from "react-i18next";
 
 import Grid from "@material-ui/core/Grid";
-import { Button, Paper, TextField } from "@material-ui/core";
+import { Accordion, AccordionDetails, AccordionSummary, Button, Paper, TextField, Typography } from "@material-ui/core";
 import TesseractComponent from './tesseractComponent';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { IHTMLFileType } from "../../utils/interfaces/interfaces";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { isMobile } from "../../utils/functions";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -40,13 +42,16 @@ export default function HomeComponent() {
     const [imageSource, setImageSource] = useState<string>("");
     const [file, setFile] = useState<IHTMLFileType>();
     const imgRef = useRef<any>();
-    const [buttonText, setButtonText] = useState<string>(t('upload_file'));
-
-
+    const [buttonText, setButtonText] = useState<string>("");
+    const [isUrlError, setIsUrlError] = useState<boolean>(false);
 
     const handleInputFile = (e: any) => {
         // console.log(e);
         if (e.target.files.length) {
+            if (e.target.files[0].type && e.target.files[0].type.indexOf('image/') === -1) {
+                alert(t('file_not_image'));
+                return;
+            }
             setImageSource('');
             setFile(e.target.files[0]);
             setButtonText(e.target.files[0].name);
@@ -59,7 +64,7 @@ export default function HomeComponent() {
             }
             reader.readAsDataURL(e.target.files[0]);
         } else {
-            setButtonText(t('upload_file'));
+            setButtonText("");
             setFile(undefined);
             setImageSource("");
         }
@@ -72,9 +77,30 @@ export default function HomeComponent() {
         setInputType(value);
         setFile(undefined);
         setImageSource("");
-        setButtonText(t('upload_file'));
+        setButtonText("");
         imgRef.current.src = "";
     };
+
+    useEffect(() => {
+        const delayInput = setTimeout(() => {
+            //wait 1.5 sec until user stop typing
+            if (imageSource.length > 5) {
+                const expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+                const regexURL = new RegExp(expression);
+                if (imageSource.match(regexURL))
+                    setIsUrlError(false);
+                else
+                    setIsUrlError(true);
+            }
+
+        }, 1500);
+
+        if (imageSource.length > 0 && imageSource.length < 5) {
+            setIsUrlError(true);
+        }
+
+        return () => clearTimeout(delayInput);
+    }, [imageSource]);
 
     return (
         <Grid container>
@@ -98,17 +124,19 @@ export default function HomeComponent() {
                             variant="contained"
                             component="label"
                             startIcon={<CloudUploadIcon />}>
-                            {buttonText}
-                            <input type="file" hidden onChange={handleInputFile} />
+                            {buttonText ? buttonText : t('upload_file')}
+                            <input type="file" hidden onChange={handleInputFile} accept="image/*" />
                         </Button>
                     </Grid> :
 
                         <Grid item xs={12} sm={12} lg={6}>
                             <TextField
+                                error={isUrlError}
                                 label={t('insert_url')}
                                 fullWidth
                                 value={imageSource}
                                 onChange={(e) => setImageSource(e.target.value)}
+                                helperText={isUrlError ? t('incorrect_url') : ''}
                             />
                         </Grid>
                     }
@@ -116,14 +144,30 @@ export default function HomeComponent() {
             </Grid>
 
             <Grid item xs={12} lg={6}>
-                <Paper className={classes.paper}>
-                    <img ref={imgRef} src={imageSource} className={classes.img} alt={t('image_alt')} />
-                </Paper>
+                {isMobile() &&
+                    <Accordion defaultExpanded style={{ margin: 10 }}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1c-content"
+                            id="panel1c-header"
+                        >
+                            <span>{t('image_panel')}</span>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <img ref={imgRef} src={imageSource} className={classes.img} alt={t('image_alt')} />
+                        </AccordionDetails>
+                    </Accordion>}
+
+                {!isMobile() &&
+                    <Paper className={classes.paper}>
+                        <img ref={imgRef} src={imageSource} className={classes.img} alt={t('image_alt')} />
+                    </Paper>}
+
             </Grid>
 
             <Grid item xs={12} lg={6}>
                 <Paper className={classes.paper}>
-                    <TesseractComponent imageSource={imageSource ? imageSource : file} />
+                    {!isUrlError && <TesseractComponent imageSource={imageSource ? imageSource : file} />}
                 </Paper>
             </Grid>
 

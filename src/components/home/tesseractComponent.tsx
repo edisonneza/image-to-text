@@ -110,11 +110,11 @@ export default function TesseractComponent(props: ITesseractProps) {
     }
 
     if (!imageSource)
-        return (<p className={classes.textContainer}>Please select an image...</p>);
+        return (<p className={classes.textContainer}>{t('please_select_image')}</p>);
 
     return (
         <Grid container className={classes.textContainer}>
-            <Grid item style={{ width: '100%' }}>
+            <Grid item style={{ width: '100%'}}>
                 {(isLoading && progress !== 100) && (
                     <>
                         {progress > 0 ? <LinearProgressWithLabel value={progress} /> : <LinearProgress />}
@@ -125,7 +125,9 @@ export default function TesseractComponent(props: ITesseractProps) {
                 {textFromImage &&
                     (
                         <>
-                            {textFromImage}
+                            <pre style={{fontFamily: 'inherit', fontSize: 14, overflowX: 'auto'}}>
+                                {textFromImage}
+                            </pre>
                             < Divider style={{ margin: '12px 0' }} />
                             <Grid container justify="flex-end">
                                 <Button
