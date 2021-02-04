@@ -1,6 +1,7 @@
 {
   "app_title": "Image to Text Converter | © Edison Neza",
   "select_language": "Select Language",
+  "select_image_language": "Select Image Language",
   "hello_welcome": "Welcome to Image to Text app",
   "select_input_type": "Select input type",
   "upload_file": "Upload file",

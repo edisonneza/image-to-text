@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { useTranslation } from "react-i18next";
-import Tesseract, { createWorker, ImageLike } from "tesseract.js";
-
+import Tesseract, { createWorker } from "tesseract.js";
 import { Grid, Button } from "@material-ui/core";
 import { LinearProgressWithLabel } from '../linearProgress';
 import { Divider, LinearProgress } from "@material-ui/core";
@@ -10,7 +9,6 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import { copyToClipboard } from '../../utils/functions';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '../alertComponent';
-import { IHTMLFileType } from '../../utils/interfaces/interfaces';
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -80,8 +78,8 @@ export default function TesseractComponent(props: ITesseractProps) {
             (async () => {
                 try {
                     await worker.load();
-                    await worker.loadLanguage('sqi');
-                    await worker.initialize('sqi');
+                    await worker.loadLanguage('eng');
+                    await worker.initialize('eng');
                     const { data } = await worker.recognize(imageSource);
                     console.log('data', data);
                     console.log('text', data.text);

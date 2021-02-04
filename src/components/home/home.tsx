@@ -14,6 +14,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { IHTMLFileType } from "../../utils/interfaces/interfaces";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { isMobile } from "../../utils/functions";
+import ImageLanguageSelector from "../imageLanguageSelector";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -109,11 +110,14 @@ export default function HomeComponent() {
                 <FormControl component="fieldset">
                     <FormLabel component="legend">{t('select_input_type')}</FormLabel>
                     <RadioGroup row aria-label="position" name="position" defaultValue="top">
-                        <Grid item xs={6} sm={6} lg={6}>
+                        <Grid item xs={4} sm={4} lg={4}>
                             <FormControlLabel value="url" checked={inputType === 'url'} control={<Radio color="primary" />} label="URL" onClick={() => handleRadioChange('url')} />
                         </Grid>
-                        <Grid item xs={6} sm={6} lg={6}>
+                        <Grid item xs={4} sm={4} lg={4}>
                             <FormControlLabel value="file" checked={inputType === 'file'} control={<Radio color="primary" />} label="File" onClick={() => handleRadioChange('file')} />
+                        </Grid>
+                        <Grid item xs={4} sm={4} lg={4}>
+                            <ImageLanguageSelector />
                         </Grid>
                     </RadioGroup>
                 </FormControl>

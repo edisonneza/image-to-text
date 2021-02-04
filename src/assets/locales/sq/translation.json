@@ -1,6 +1,7 @@
 {
   "app_title": "Konvertues Imazh në Tekst | © Edison Neza",
   "select_language": "Zgjidhni gjuhën",
+  "select_image_language": "Zgjidhni gjuhën e imazhit",
   "hello_welcome": "Miresevini në Image to Text app",
   "select_input_type": "Zgjidhni menyrën e ngarkimit të imazhit",
   "upload_file": "Ngarko skedarin",
