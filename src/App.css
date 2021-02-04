@@ -6,3 +6,9 @@
   float: right;
   margin-top: -35px;
 }
+
+.about-icon {
+  float: left;
+  margin-top: -35px;
+  /* margin-left: 10px; */
+}

@@ -14,5 +14,13 @@
   "please_select_image": "Ju lutem zgjidhni një imazh...",
   "incorrect_url": "URL jo korrekte",
   "image_panel": "Paneli i imazhit",
-  "error_cors_or_other": "Aksesimi për të marrë imazhin është bllokuar nga politika CORS; ose arsye tjetër. Provo me një imazh tjetër :)"
+  "error_cors_or_other": "Aksesimi për të marrë imazhin është bllokuar nga politika CORS; ose arsye tjetër. Provo me një imazh tjetër :)",
+  "about_title": "Si funsionon ky aplikacion?",
+  "about_1": "Ky eshte nje aplikacion web i ndertuar per te bere te mundur konvertimin e imazheve ne tekst.",
+  "about_2": "For the conversion to be as accurate as possible you need to select the language of the text located in the image. The conversion process starts automatically as soon as you enter the URL or upload an image.",
+  "about_3": "Imazhi do sugjerohet te kite background te bardhe dhe shkrim te zi.",
+  "about_4": "Ky eshte nje aplikacion qe funksionon dhe offline. Kjo arrihet nga funksionalitet e ofruara nga PWA, dhe mund te instalohet ne Windows, Mac, iOS ose Android.",
+  "about_5": "Cdo funksionalitet kryhet nga paisja hardware e perdoruesit. Pra asnje imazh nuk dergohet ose ruhet ne server. Shpejtesia e procesimit varet nga parametrat hardware te paisjes.",
+  "about_6": "",
+  "close": "Mbyll"
 }
