@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { useTranslation } from "react-i18next";
-import Tesseract from "tesseract.js";
+import Tesseract, { createWorker, ImageLike } from "tesseract.js";
 
 import { Grid, Button } from "@material-ui/core";
 import { LinearProgressWithLabel } from '../linearProgress';
@@ -10,6 +10,7 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import { copyToClipboard } from '../../utils/functions';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '../alertComponent';
+import { IHTMLFileType } from '../../utils/interfaces/interfaces';
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface ITesseractProps {
-    imageSource?: string
+    imageSource?: any
 }
 
 export default function TesseractComponent(props: ITesseractProps) {
@@ -38,33 +39,66 @@ export default function TesseractComponent(props: ITesseractProps) {
 
 
     useEffect(() => {
+        let worker: Tesseract.Worker;
         if (imageSource) {
             setProgress(0);
             setTextFromImage("");
             setIsLoading(true);
 
-            Tesseract.recognize(
-                imageSource,
-                'eng',
-                {
-                    logger: m => {
-                        console.log('logger: ', m);
-                        if (m.status === "recognizing text") {
-                            setProgress(m.progress * 100);
-                        }
+            // Tesseract.recognize(
+            //     imageSource,
+            //     'sqi',
+            //     {
+            //         logger: m => {
+            //             console.log('logger: ', m);
+            //             if (m.status === "recognizing text") {
+            //                 setProgress(m.progress * 100);
+            //             }
+            //         }
+            //     }
+            // ).then(({ data: { text } }) => {
+            //     console.log('text: ', text);
+            //     setTextFromImage(text);
+            // }).catch(error => {
+            //     console.log('error', error);
+            //     setErrorMessage(error.toString());
+            //     setIsError(true);
+            //     setIsLoading(false);
+
+            //     // setTimeout(() => setErrorMessage(""), 3000);
+            // })
+
+            worker = createWorker({
+                logger: m => {
+                    console.log(m);
+                    if (m.status === "recognizing text") {
+                        setProgress(m.progress * 100);
                     }
                 }
-            ).then(({ data: { text } }) => {
-                console.log('text: ', text);
-                setTextFromImage(text);
-            }).catch(error => {
-                console.log('error', error);
-                setErrorMessage(error.toString());
-                setIsError(true);
-                setIsLoading(false);
+            });
 
-                // setTimeout(() => setErrorMessage(""), 3000);
-            })
+            (async () => {
+                try {
+                    await worker.load();
+                    await worker.loadLanguage('sqi');
+                    await worker.initialize('sqi');
+                    const { data } = await worker.recognize(imageSource);
+                    console.log('data', data);
+                    console.log('text', data.text);
+                    setTextFromImage(data.text);
+                    await worker.terminate();
+                } catch (error) {
+                    console.log('error', error);
+                    setErrorMessage(error.toString());
+                    setIsError(true);
+                    setIsLoading(false);
+                }
+            })();
+        }
+
+        return () => {
+            if (worker)
+                (async () => await worker.terminate())(); //end the current process if user adds new image
         }
     }, [imageSource]);
 
@@ -107,7 +141,7 @@ export default function TesseractComponent(props: ITesseractProps) {
                         </>
                     )}
 
-                {(!isLoading && errorMessage) && <p style={{textAlign: 'center', color: 'tomato'}}>{t('error_occurred')}</p>}
+                {(!isLoading && errorMessage) && <p style={{ textAlign: 'center', color: 'tomato' }}>{t('error_occurred')}</p>}
 
                 <Snackbar
                     anchorOrigin={{

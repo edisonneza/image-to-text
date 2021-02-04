@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -11,6 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import { Button, Paper, TextField } from "@material-ui/core";
 import TesseractComponent from './tesseractComponent';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import { IHTMLFileType } from "../../utils/interfaces/interfaces";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -25,7 +26,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         maxWidth: '100%'
     },
     paper: {
-        margin: 10
+        margin: 10,
+        minHeight: '50vh'
     }
 }));
 
@@ -33,8 +35,46 @@ export default function HomeComponent() {
     const { t } = useTranslation();
     const classes = useStyles();
 
-    const [inputType, setInputType] = React.useState<String>("url");
-    const [imageSource, setImageSource] = React.useState<string>("https://tesseract.projectnaptha.com/img/eng_bw.png");
+    const [inputType, setInputType] = useState<string>("url");
+    // const [imageSource, setImageSource] = React.useState<string>("https://tesseract.projectnaptha.com/img/eng_bw.png");
+    const [imageSource, setImageSource] = useState<string>("");
+    const [file, setFile] = useState<IHTMLFileType>();
+    const imgRef = useRef<any>();
+    const [buttonText, setButtonText] = useState<string>(t('upload_file'));
+
+
+
+    const handleInputFile = (e: any) => {
+        // console.log(e);
+        if (e.target.files.length) {
+            setImageSource('');
+            setFile(e.target.files[0]);
+            setButtonText(e.target.files[0].name);
+
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                // setImageSource(e.target.result);
+                if (e.target)
+                    imgRef.current.src = e.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        } else {
+            setButtonText(t('upload_file'));
+            setFile(undefined);
+            setImageSource("");
+        }
+
+    }
+
+    console.log('state: ', file)
+
+    const handleRadioChange = (value: string) => {
+        setInputType(value);
+        setFile(undefined);
+        setImageSource("");
+        setButtonText(t('upload_file'));
+        imgRef.current.src = "";
+    };
 
     return (
         <Grid container>
@@ -44,10 +84,10 @@ export default function HomeComponent() {
                     <FormLabel component="legend">{t('select_input_type')}</FormLabel>
                     <RadioGroup row aria-label="position" name="position" defaultValue="top">
                         <Grid item xs={6} sm={6} lg={6}>
-                            <FormControlLabel value="url" control={<Radio color="primary" />} label="URL" onClick={() => setInputType('url')} />
+                            <FormControlLabel value="url" checked={inputType === 'url'} control={<Radio color="primary" />} label="URL" onClick={() => handleRadioChange('url')} />
                         </Grid>
                         <Grid item xs={6} sm={6} lg={6}>
-                            <FormControlLabel value="file" control={<Radio color="primary" />} label="File" onClick={() => setInputType('file')} />
+                            <FormControlLabel value="file" checked={inputType === 'file'} control={<Radio color="primary" />} label="File" onClick={() => handleRadioChange('file')} />
                         </Grid>
                     </RadioGroup>
                 </FormControl>
@@ -58,8 +98,8 @@ export default function HomeComponent() {
                             variant="contained"
                             component="label"
                             startIcon={<CloudUploadIcon />}>
-                            {t('upload_file')}
-                            <input type="file" hidden />
+                            {buttonText}
+                            <input type="file" hidden onChange={handleInputFile} />
                         </Button>
                     </Grid> :
 
@@ -77,13 +117,13 @@ export default function HomeComponent() {
 
             <Grid item xs={12} lg={6}>
                 <Paper className={classes.paper}>
-                    <img src={imageSource} className={classes.img} alt={t('image_alt')} />
+                    <img ref={imgRef} src={imageSource} className={classes.img} alt={t('image_alt')} />
                 </Paper>
             </Grid>
 
             <Grid item xs={12} lg={6}>
                 <Paper className={classes.paper}>
-                    <TesseractComponent imageSource={imageSource} />
+                    <TesseractComponent imageSource={imageSource ? imageSource : file} />
                 </Paper>
             </Grid>
 
