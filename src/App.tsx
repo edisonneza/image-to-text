@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import LanguageSelect from "./components/languageSelector";
 import HomeComponent from "./components/home/home";
 import InfoIcon from '@material-ui/icons/Info';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import AlertDialog from "./components/home/about";
 
 export default function App() {
