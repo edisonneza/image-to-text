@@ -82,8 +82,8 @@ export default function TesseractComponent(props: ITesseractProps) {
                     await worker.loadLanguage(imageLanguage || 'eng');
                     await worker.initialize(imageLanguage || 'eng');
                     const { data } = await worker.recognize(imageSource);
-                    console.log('data', data);
-                    console.log('text', data.text);
+                    // console.log('data', data);
+                    // console.log('text', data.text);
                     setTextFromImage(data.text);
                     await worker.terminate();
                 } catch (error) {

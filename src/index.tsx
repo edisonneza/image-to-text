@@ -6,6 +6,9 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import "./i18nextInit";
 
+console.log("%cThanks for being here! Email me if you have suggestions or projects to collaborate :)", "background-color:white;padding:5px 12px;border-radius:8px;font-size:20px;color:red;");
+console.log("%cedisonneza.dev@gmail.com", "background-color:white;padding:8px 16px;border-radius:8px;font-size:26px;color:red;");
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

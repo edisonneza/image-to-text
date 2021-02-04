@@ -8,7 +8,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import { useTranslation } from "react-i18next";
 
 import Grid from "@material-ui/core/Grid";
-import { Accordion, AccordionDetails, AccordionSummary, Button, Paper, TextField, Typography } from "@material-ui/core";
+import { Accordion, AccordionDetails, AccordionSummary, Button, Paper, TextField } from "@material-ui/core";
 import TesseractComponent from './tesseractComponent';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { IHTMLFileType } from "../../utils/interfaces/interfaces";
@@ -73,7 +73,7 @@ export default function HomeComponent() {
 
     }
 
-    console.log('state: ', file)
+    // console.log('state: ', file)
 
     const handleRadioChange = (value: string) => {
         setInputType(value);
