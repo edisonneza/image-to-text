@@ -9,7 +9,13 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 
 type LanguageType = { value: string, label: string };
 
-const ImageLanguageSelector = () => {
+type ImageLanguageComponentType = {
+    handleImageLanguage?: Function
+};
+
+const ImageLanguageSelector = (props: ImageLanguageComponentType) => {
+    // console.log(props);
+    const { handleImageLanguage } = props;
     const selected = localStorage.getItem("imageLang") || "eng";
     const { t } = useTranslation();
 
@@ -17,7 +23,7 @@ const ImageLanguageSelector = () => {
     const [menuAnchor, setMenuAnchor] = React.useState(initialValue);
 
     return (
-        <div style={{margin: 6}}>
+        <div style={{ margin: 6 }}>
             <Button size="small" onClick={({ currentTarget }) => setMenuAnchor(currentTarget)}>
                 {languageMap.filter(item => item.value === selected)[0].label}
                 <ArrowDropDown fontSize="small" />
@@ -43,6 +49,8 @@ const ImageLanguageSelector = () => {
                                 <ListItem button key={item.value} onClick={() => {
                                     localStorage.setItem('imageLang', item.value);
                                     setMenuAnchor(null);
+                                    if(handleImageLanguage)
+                                        handleImageLanguage(item.value);
                                 }}>
                                     {item.label}
                                 </ListItem>

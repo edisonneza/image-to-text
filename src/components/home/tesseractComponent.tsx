@@ -20,11 +20,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface ITesseractProps {
-    imageSource?: any
+    imageSource?: any,
+    imageLanguage?: string
 }
 
 export default function TesseractComponent(props: ITesseractProps) {
-    const { imageSource } = props;
+    const { imageSource, imageLanguage } = props;
     const { t } = useTranslation();
     const classes = useStyles();
 
@@ -78,8 +79,8 @@ export default function TesseractComponent(props: ITesseractProps) {
             (async () => {
                 try {
                     await worker.load();
-                    await worker.loadLanguage('eng');
-                    await worker.initialize('eng');
+                    await worker.loadLanguage(imageLanguage || 'eng');
+                    await worker.initialize(imageLanguage || 'eng');
                     const { data } = await worker.recognize(imageSource);
                     console.log('data', data);
                     console.log('text', data.text);
@@ -101,7 +102,7 @@ export default function TesseractComponent(props: ITesseractProps) {
             if (worker)
                 (async () => await worker.terminate())(); //end the current process if user adds new image
         }
-    }, [imageSource]);
+    }, [imageSource, imageLanguage]);
 
     const copyText = () => {
         copyToClipboard(textFromImage);

@@ -45,6 +45,7 @@ export default function HomeComponent() {
     const imgRef = useRef<any>();
     const [buttonText, setButtonText] = useState<string>("");
     const [isUrlError, setIsUrlError] = useState<boolean>(false);
+    const [imageLanguageSelected, setImageLanguageSelected] = useState<string>("");
 
     const handleInputFile = (e: any) => {
         // console.log(e);
@@ -117,7 +118,7 @@ export default function HomeComponent() {
                             <FormControlLabel value="file" checked={inputType === 'file'} control={<Radio color="primary" />} label="File" onClick={() => handleRadioChange('file')} />
                         </Grid>
                         <Grid item xs={4} sm={4} lg={4}>
-                            <ImageLanguageSelector />
+                            <ImageLanguageSelector handleImageLanguage={setImageLanguageSelected}/>
                         </Grid>
                     </RadioGroup>
                 </FormControl>
@@ -171,7 +172,7 @@ export default function HomeComponent() {
 
             <Grid item xs={12} lg={6}>
                 <Paper className={classes.paper}>
-                    {!isUrlError && <TesseractComponent imageSource={imageSource ? imageSource : file} />}
+                    {!isUrlError && <TesseractComponent imageSource={imageSource ? imageSource : file} imageLanguage={imageLanguageSelected}/>}
                 </Paper>
             </Grid>
 
