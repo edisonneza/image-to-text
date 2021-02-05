@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     paper: {
         margin: 10,
-        minHeight: '50vh'
+        minHeight: '70vh'
     }
 }));
 
@@ -118,7 +118,7 @@ export default function HomeComponent() {
                             <FormControlLabel value="file" checked={inputType === 'file'} control={<Radio color="primary" />} label="File" onClick={() => handleRadioChange('file')} />
                         </Grid>
                         <Grid item xs={4} sm={4} lg={4}>
-                            <ImageLanguageSelector handleImageLanguage={setImageLanguageSelected}/>
+                            <ImageLanguageSelector handleImageLanguage={setImageLanguageSelected} />
                         </Grid>
                     </RadioGroup>
                 </FormControl>
@@ -148,32 +148,34 @@ export default function HomeComponent() {
                 </Grid>
             </Grid>
 
-            <Grid item xs={12} lg={6}>
-                {isMobile() &&
-                    <Accordion defaultExpanded style={{ margin: 10 }}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1c-content"
-                            id="panel1c-header"
-                        >
-                            <span>{t('image_panel')}</span>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <img ref={imgRef} src={imageSource} className={classes.img} alt={t('image_alt')} />
-                        </AccordionDetails>
-                    </Accordion>}
+            <Grid container>
+                <Grid item xs={12} lg={6}>
+                    {isMobile() &&
+                        <Accordion defaultExpanded style={{ margin: 10 }}>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1c-content"
+                                id="panel1c-header"
+                            >
+                                <span>{t('image_panel')}</span>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <img ref={imgRef} src={imageSource} className={classes.img} alt={t('image_alt')} />
+                            </AccordionDetails>
+                        </Accordion>}
 
-                {!isMobile() &&
+                    {!isMobile() &&
+                        <Paper className={classes.paper}>
+                            <p> <img ref={imgRef} src={imageSource} className={classes.img} alt={t('image_alt')} /> </p>
+                        </Paper>}
+
+                </Grid>
+
+                <Grid item xs={12} lg={6}>
                     <Paper className={classes.paper}>
-                        <img ref={imgRef} src={imageSource} className={classes.img} alt={t('image_alt')} />
-                    </Paper>}
-
-            </Grid>
-
-            <Grid item xs={12} lg={6}>
-                <Paper className={classes.paper}>
-                    {!isUrlError && <TesseractComponent imageSource={imageSource ? imageSource : file} imageLanguage={imageLanguageSelected}/>}
-                </Paper>
+                        {!isUrlError && <TesseractComponent imageSource={imageSource ? imageSource : file} imageLanguage={imageLanguageSelected} />}
+                    </Paper>
+                </Grid>
             </Grid>
 
 
