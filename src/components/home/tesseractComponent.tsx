@@ -69,7 +69,7 @@ export default function TesseractComponent(props: ITesseractProps) {
 
             worker = createWorker({
                 logger: m => {
-                    console.log(m);
+                    // console.log(m);
                     if (m.status === "recognizing text") {
                         setProgress(m.progress * 100);
                     }
