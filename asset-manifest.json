@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/image-to-text/static/css/main.0759fa22.chunk.css",
+    "main.js": "/image-to-text/static/js/main.bbc04706.chunk.js",
+    "runtime-main.js": "/image-to-text/static/js/runtime-main.93573b8d.js",
+    "static/js/2.5fc505fe.chunk.js": "/image-to-text/static/js/2.5fc505fe.chunk.js",
+    "static/js/3.c01abd35.chunk.js": "/image-to-text/static/js/3.c01abd35.chunk.js",
+    "index.html": "/image-to-text/index.html",
+    "service-worker.js": "/image-to-text/service-worker.js",
+    "static/js/2.5fc505fe.chunk.js.LICENSE.txt": "/image-to-text/static/js/2.5fc505fe.chunk.js.LICENSE.txt",
+    "static/media/getFetch.cjs": "/image-to-text/static/media/getFetch.d7d6010d.cjs"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.93573b8d.js",
+    "static/js/2.5fc505fe.chunk.js",
+    "static/css/main.0759fa22.chunk.css",
+    "static/js/main.bbc04706.chunk.js"
+  ]
+}
