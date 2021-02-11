@@ -18,9 +18,9 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/imagetotext/",
+  "start_url": "/image-to-text/",
   "display": "standalone",
   "theme_color": "#3367D6",
   "background_color": "#ffffff",
-  "scope": "/imagetotext/"
+  "scope": "/image-to-text/"
 }

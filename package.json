@@ -2,7 +2,7 @@
   "name": "react-pwa-image-to-text",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/imagetotext/",
+  "homepage": "/image-to-text/",
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
