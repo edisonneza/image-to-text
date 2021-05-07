@@ -24,5 +24,6 @@
   "about_4": "Ky është një aplikacion që funksionon dhe offline. Kjo arrihet nga funksionalitet e ofruara nga PWA, dhe mund të instalohet në Windows, Mac, iOS ose Android.",
   "about_5": "Cdo funksionalitet kryhet nga paisja hardware e përdoruesit. Pra asnjë imazh nuk dërgohet ose ruhet në server. Shpejtësia e procesimit varet nga parametrat hardware të paisjes.",
   "about_6": "Për cdo sugjerim, bug, ose funksionalitet të ri, please email me :)",
-  "close": "Mbyll"
+  "close": "Mbyll",
+  "hint_image_paste": "E dini që mund të bëni copy-paste një imazh pa qenë nevoja për ta ngarkuar atë?"
 }

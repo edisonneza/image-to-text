@@ -192,7 +192,12 @@ export default function HomeComponent() {
                             </AccordionSummary>
                             <AccordionDetails>
                                 <img style={{ display: (imageSource || file) ? 'block' : 'none' }} ref={imgRef} src={imageSource} className={classes.img} alt={t('image_alt')} />
-                                {(!imageSource && !file) && <p style={{ padding: 15 }}>{t('no_image')}</p>}
+                                {(!imageSource && !file) && (
+                                    <p style={{ padding: 15 }}>
+                                        {t('no_image')} <br/> <br/>
+                                        {t('hint_image_paste')} 🙃
+                                    </p>
+                                )}
                             </AccordionDetails>
                         </Accordion>}
 
@@ -200,7 +205,12 @@ export default function HomeComponent() {
                         <Paper className={classes.paper}>
                             <p>
                                 <img style={{ display: (imageSource || file) ? 'block' : 'none' }} ref={imgRef} src={imageSource} className={classes.img} alt={t('image_alt')} />
-                                {(!imageSource && !file) && <p style={{ padding: 15 }}>{t('no_image')}</p>}
+                                {(!imageSource && !file) && (
+                                    <p style={{ padding: 15 }}>
+                                        {t('no_image')} <br/> <br/>
+                                        {t('hint_image_paste')} 🙃
+                                    </p>
+                                )}
                             </p>
                         </Paper>}
 

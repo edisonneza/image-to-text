@@ -6,12 +6,16 @@ Use of different technologies such as:
 
 #react #typescript #pwa #material-ui #tesseract-ocr #i18next
 
+Features: 
+* Paste image from Clipboard
+
 [TODO]
 
 * Add new option to convert images in backend (maybe using Node.js with the same library) (for tests purposes)
 * Optimize speed using more workers
 * Drag and Drop feature
-* Add user authentication (.NET Web API) to be able to save results
+* <del> Paste image from Clipboard feature </del>
+* Add user authentication to be able to save results
 * Routers & Redux 
 * And 🤔...
 
