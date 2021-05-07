@@ -10,6 +10,8 @@
   "text_copied": "Text has been copied",
   "error_occurred": "An error occurred",
   "image_alt": "Image failed to load",
+  "no_image": "An image has not been uploaded or pasted yet",
+  "no_image_pasted": "You are trying to Paste NOT an image!",
   "file_not_image": "The file you are selecting is not an image :(",
   "please_select_image": "Please select an image...",
   "incorrect_url": "Incorrect URL",

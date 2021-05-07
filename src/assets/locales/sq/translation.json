@@ -10,6 +10,8 @@
   "text_copied": "Teksti është kopjuar",
   "error_occurred": "Ka ndodhur një gabim",
   "image_alt": "Imazhi nuk u ngarkua",
+  "no_image": "Akoma nuk është ngarkuar një imazh",
+  "no_image_pasted": "Ajo që ju po mundoheni të bëni Paste NUK është një imazh!",
   "file_not_image": "Skedari që po zgjidhni nuk është një imazh :(",
   "please_select_image": "Ju lutem zgjidhni një imazh...",
   "incorrect_url": "URL jo korrekte",

@@ -8,7 +8,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import { useTranslation } from "react-i18next";
 
 import Grid from "@material-ui/core/Grid";
-import { Accordion, AccordionDetails, AccordionSummary, Button, Paper, TextField } from "@material-ui/core";
+import { Accordion, AccordionDetails, AccordionSummary, Button, Paper, TextField, Snackbar } from "@material-ui/core";
 import TesseractComponent from './tesseractComponent';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { IHTMLFileType } from "../../utils/interfaces/interfaces";
@@ -46,6 +46,7 @@ export default function HomeComponent() {
     const [buttonText, setButtonText] = useState<string>("");
     const [isUrlError, setIsUrlError] = useState<boolean>(false);
     const [imageLanguageSelected, setImageLanguageSelected] = useState<string>("");
+    const [isImageFromClipboard, setIsImageFromClipboard] = useState<boolean>(true);
 
     const handleInputFile = (e: any) => {
         // console.log(e);
@@ -73,6 +74,31 @@ export default function HomeComponent() {
 
     }
 
+    const handleImageFromClipboard = (event: ClipboardEvent) => {
+        if (!event) return false;
+
+        var items: DataTransferItemList | [] = (event && event.clipboardData && event.clipboardData.items) || [];
+        if (items && items.length) {
+            let lastItem = items[0];
+            if (lastItem.kind === "file" && lastItem.type.indexOf("image") > -1) {
+                var blob = lastItem.getAsFile();
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    let result: any = (event && event.target && event.target.result) || null;
+                    setImageSource('');
+                    setFile(result);
+                    imgRef.current.src = result;
+                };
+
+                if (blob)
+                    reader.readAsDataURL(blob);
+            } else {
+                setIsImageFromClipboard(false);
+                setTimeout(() => setIsImageFromClipboard(true), 2500);
+            }
+        }
+    }
+
     // console.log('state: ', file)
 
     const handleRadioChange = (value: string) => {
@@ -84,6 +110,8 @@ export default function HomeComponent() {
     };
 
     useEffect(() => {
+        document.addEventListener('paste', (event) => handleImageFromClipboard(event));
+
         const delayInput = setTimeout(() => {
             //wait 1.5 sec until user stop typing
             if (imageSource.length > 5) {
@@ -101,7 +129,10 @@ export default function HomeComponent() {
             setIsUrlError(true);
         }
 
-        return () => clearTimeout(delayInput);
+        return () => {
+            clearTimeout(delayInput);
+            document.removeEventListener('paste', handleImageFromClipboard);
+        };
     }, [imageSource]);
 
     return (
@@ -160,13 +191,17 @@ export default function HomeComponent() {
                                 <span>{t('image_panel')}</span>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <img ref={imgRef} src={imageSource} className={classes.img} alt={t('image_alt')} />
+                                <img style={{ display: (imageSource || file) ? 'block' : 'none' }} ref={imgRef} src={imageSource} className={classes.img} alt={t('image_alt')} />
+                                {(!imageSource && !file) && <p style={{ padding: 15 }}>{t('no_image')}</p>}
                             </AccordionDetails>
                         </Accordion>}
 
                     {!isMobile() &&
                         <Paper className={classes.paper}>
-                            <p> <img ref={imgRef} src={imageSource} className={classes.img} alt={t('image_alt')} /> </p>
+                            <p>
+                                <img style={{ display: (imageSource || file) ? 'block' : 'none' }} ref={imgRef} src={imageSource} className={classes.img} alt={t('image_alt')} />
+                                {(!imageSource && !file) && <p style={{ padding: 15 }}>{t('no_image')}</p>}
+                            </p>
                         </Paper>}
 
                 </Grid>
@@ -178,6 +213,14 @@ export default function HomeComponent() {
                 </Grid>
             </Grid>
 
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+                open={!isImageFromClipboard}
+                message={t('no_image_pasted')}
+            />
 
         </Grid>
     );
