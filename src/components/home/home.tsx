@@ -43,6 +43,7 @@ export default function HomeComponent() {
     const [imageSource, setImageSource] = useState<string>("");
     const [file, setFile] = useState<IHTMLFileType>();
     const imgRef = useRef<any>();
+    // let pasteContainerRef = useRef() as React.MutableRefObject<HTMLDivElement>;
     const [buttonText, setButtonText] = useState<string>("");
     const [isUrlError, setIsUrlError] = useState<boolean>(false);
     const [imageLanguageSelected, setImageLanguageSelected] = useState<string>("");
@@ -74,8 +75,8 @@ export default function HomeComponent() {
 
     }
 
-    const handleImageFromClipboard = (event: ClipboardEvent) => {
-        if (!event) return false;
+    const handleImageFromClipboard = (event: ClipboardEvent | any) => {
+        if (!event || event.target.tagName === "INPUT" || event.target.tagName === "input") return false;
 
         var items: DataTransferItemList | [] = (event && event.clipboardData && event.clipboardData.items) || [];
         if (items && items.length) {
@@ -194,7 +195,7 @@ export default function HomeComponent() {
                                 <img style={{ display: (imageSource || file) ? 'block' : 'none' }} ref={imgRef} src={imageSource} className={classes.img} alt={t('image_alt')} />
                                 {(!imageSource && !file) && (
                                     <p style={{ padding: 15 }}>
-                                        {t('no_image')} <br/> <br/>
+                                        {t('no_image')} <br /> <br />
                                         {t('hint_image_paste')} 🙃
                                     </p>
                                 )}
@@ -203,15 +204,15 @@ export default function HomeComponent() {
 
                     {!isMobile() &&
                         <Paper className={classes.paper}>
-                            <p>
+                            <div>
                                 <img style={{ display: (imageSource || file) ? 'block' : 'none' }} ref={imgRef} src={imageSource} className={classes.img} alt={t('image_alt')} />
                                 {(!imageSource && !file) && (
                                     <p style={{ padding: 15 }}>
-                                        {t('no_image')} <br/> <br/>
+                                        {t('no_image')} <br /> <br />
                                         {t('hint_image_paste')} 🙃
                                     </p>
                                 )}
-                            </p>
+                            </div>
                         </Paper>}
 
                 </Grid>
